@@ -1,30 +1,53 @@
 {
-  "$schema_version": "0.1",
-  "description": "Seoul Han River water quality measurement stations metadata. Shared between apps/web (Phase 1) and packages/geometry / apps/api (Phase 2). Coordinates are placeholders in Phase 1 and must be verified against official sources before Phase 2 geometry use.",
+  "$schema_version": "0.2",
+  "description": "Seoul Han River water quality measurement stations metadata. Shared between apps/web (Phase 1) and packages/geometry / apps/api (Phase 2).",
+  "coordinates_note": "Phase 1.5 좌표는 APPROXIMATE — 한강 합류부 / 선유도 등 잘 알려진 랜드마크 기준. Phase 2 geometry 작업 전 서울시 열린데이터광장 'OA-22264 하천수질측정망 위치정보' xlsx로 검증·갱신 필요.",
+  "coordinates_source": "https://data.seoul.go.kr/dataList/OA-22264/F/1/datasetView.do",
+  "coordinate_reference_system": "WGS84 (EPSG:4326)",
   "stations": [
     {
       "name": "탄천",
       "name_en": "Tancheon",
-      "description": "탄천 — 한강 남쪽 지천, 강남구 일대 합류",
-      "coordinates": null
+      "description": "탄천 — 한강 남쪽 지천, 강남구 일대 합류 (잠실대교 부근)",
+      "coordinates": {
+        "lat": 37.523,
+        "lon": 127.081,
+        "approximate": true,
+        "anchor": "탄천 한강 합류부 (잠실대교 근방)"
+      }
     },
     {
       "name": "중랑천",
       "name_en": "Jungnangcheon",
-      "description": "중랑천 — 한강 북쪽 지천, 성동구 일대 합류",
-      "coordinates": null
+      "description": "중랑천 — 한강 북쪽 지천, 성동구·광진구 일대 합류 (응봉 부근)",
+      "coordinates": {
+        "lat": 37.547,
+        "lon": 127.060,
+        "approximate": true,
+        "anchor": "중랑천 한강 합류부 (응봉 근방)"
+      }
     },
     {
       "name": "안양천",
       "name_en": "Anyangcheon",
-      "description": "안양천 — 한강 남쪽 지천, 영등포구 일대 합류",
-      "coordinates": null
+      "description": "안양천 — 한강 남쪽 지천, 영등포구·양천구 일대 합류 (양화교 부근)",
+      "coordinates": {
+        "lat": 37.537,
+        "lon": 126.899,
+        "approximate": true,
+        "anchor": "안양천 한강 합류부 (양화교 근방)"
+      }
     },
     {
       "name": "선유",
       "name_en": "Seonyu",
-      "description": "선유 — 한강 본류 측정소 (선유도 인근)",
-      "coordinates": null
+      "description": "선유 — 한강 본류 측정소 (선유도공원 인근)",
+      "coordinates": {
+        "lat": 37.54346,
+        "lon": 126.89969,
+        "approximate": true,
+        "anchor": "선유도 중심"
+      }
     }
   ]
 }
