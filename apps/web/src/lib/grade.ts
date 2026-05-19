@@ -93,6 +93,53 @@ export function compositeGrade(m: Measurements): GradeOrNA {
   return found.reduce(worse)
 }
 
+// ─── 등급 score (시계열용) ───────────────────────────────────────────────
+//
+// 차트에서 "위 = 좋음" 통상의 멘탈 모델에 맞추기 위해 Ia를 가장 큰 수, VI를 0으로.
+// unmeasurable → null (라인 끊김으로 렌더).
+
+export function gradeScore(g: GradeOrNA): number | null {
+  if (g === 'unmeasurable') return null
+  return GRADES.length - 1 - GRADES.indexOf(g)
+}
+
+export function gradeFromScore(score: number): Grade | null {
+  const idx = GRADES.length - 1 - score
+  if (idx < 0 || idx >= GRADES.length) return null
+  return GRADES[idx]
+}
+
+// 직전 시점(현재 - lookback) 대비 등급 step 변화량.
+// 반환: { delta, fromGrade, toGrade }. delta > 0 = 개선(score 증가), < 0 = 악화, 0 = 동일.
+// 어느 한 쪽이라도 unmeasurable이거나 비교 row 없으면 null.
+
+export interface GradeDelta {
+  delta: number
+  fromGrade: Grade
+  toGrade: Grade
+  fromTimestamp: Date
+  toTimestamp: Date
+}
+
+export function gradeDelta(
+  current: { row: Measurements & { timestamp: Date }; prev: (Measurements & { timestamp: Date }) | undefined },
+): GradeDelta | null {
+  if (!current.prev) return null
+  const now = compositeGrade(current.row)
+  const before = compositeGrade(current.prev)
+  if (now === 'unmeasurable' || before === 'unmeasurable') return null
+  const nowScore = gradeScore(now)
+  const beforeScore = gradeScore(before)
+  if (nowScore === null || beforeScore === null) return null
+  return {
+    delta: nowScore - beforeScore,
+    fromGrade: before,
+    toGrade: now,
+    fromTimestamp: current.prev.timestamp,
+    toTimestamp: current.row.timestamp,
+  }
+}
+
 // ─── 독성 (페놀, 시안) — 종합 등급에 포함하지 않음 (ADR-0002) ──────────────
 
 export type ToxState = 'detected' | 'undetected' | 'unmeasurable'

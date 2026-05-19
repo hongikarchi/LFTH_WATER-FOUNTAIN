@@ -1,4 +1,5 @@
 import './App.css'
+import { GradeTimelineChart } from './components/GradeTimelineChart'
 import { Header } from './components/Header'
 import { LatestTable } from './components/LatestTable'
 import { StationGradeCards } from './components/StationGradeCards'
@@ -13,6 +14,7 @@ function App() {
       <Header lastUpdated={lastUpdated} isLoading={isLoading} onRefresh={refetch} />
       {error && <div className="error-banner">에러: {error}</div>}
       <StationGradeCards rows={rows} />
+      <GradeTimelineChart rows={rows} />
       <LatestTable rows={rows} />
       <TimeSeriesChart rows={rows} />
     </div>
