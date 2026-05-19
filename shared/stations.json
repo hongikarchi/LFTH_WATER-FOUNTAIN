@@ -1,0 +1,30 @@
+{
+  "$schema_version": "0.1",
+  "description": "Seoul Han River water quality measurement stations metadata. Shared between apps/web (Phase 1) and packages/geometry / apps/api (Phase 2). Coordinates are placeholders in Phase 1 and must be verified against official sources before Phase 2 geometry use.",
+  "stations": [
+    {
+      "name": "탄천",
+      "name_en": "Tancheon",
+      "description": "탄천 — 한강 남쪽 지천, 강남구 일대 합류",
+      "coordinates": null
+    },
+    {
+      "name": "중랑천",
+      "name_en": "Jungnangcheon",
+      "description": "중랑천 — 한강 북쪽 지천, 성동구 일대 합류",
+      "coordinates": null
+    },
+    {
+      "name": "안양천",
+      "name_en": "Anyangcheon",
+      "description": "안양천 — 한강 남쪽 지천, 영등포구 일대 합류",
+      "coordinates": null
+    },
+    {
+      "name": "선유",
+      "name_en": "Seonyu",
+      "description": "선유 — 한강 본류 측정소 (선유도 인근)",
+      "coordinates": null
+    }
+  ]
+}
