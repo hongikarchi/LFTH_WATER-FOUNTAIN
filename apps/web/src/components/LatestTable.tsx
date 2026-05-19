@@ -1,5 +1,15 @@
+import { gradeFor } from '../lib/grade'
 import { latestPerStation } from '../lib/normalize'
-import { METRIC_LABELS, type MetricKey, type NormalizedRow } from '../types/waterQuality'
+import {
+  GRADED_METRICS,
+  GRADE_COLORS,
+  METRIC_LABELS,
+  type GradedMetric,
+  type MetricKey,
+  type NormalizedRow,
+} from '../types/waterQuality'
+
+const GRADED_SET = new Set<MetricKey>(GRADED_METRICS)
 
 interface LatestTableProps {
   rows: NormalizedRow[]
@@ -59,11 +69,23 @@ export function LatestTable({ rows }: LatestTableProps) {
               <tr key={row.station}>
                 <td className="station-cell">{row.station}</td>
                 <td>{formatTimestamp(row.timestamp)}</td>
-                {DISPLAY_METRICS.map((m) => (
-                  <td key={m} className={row[m] === null ? 'null-cell' : 'value-cell'}>
-                    {formatValue(row[m])}
-                  </td>
-                ))}
+                {DISPLAY_METRICS.map((m) => {
+                  const v = row[m]
+                  const showDot = GRADED_SET.has(m) && v !== null
+                  const grade = showDot ? gradeFor(m as GradedMetric, v) : null
+                  return (
+                    <td key={m} className={v === null ? 'null-cell' : 'value-cell'}>
+                      {grade && (
+                        <span
+                          className="grade-dot"
+                          style={{ background: GRADE_COLORS[grade].bg }}
+                          title={`등급 ${grade}`}
+                        />
+                      )}
+                      {formatValue(v)}
+                    </td>
+                  )
+                })}
               </tr>
             ))}
           </tbody>

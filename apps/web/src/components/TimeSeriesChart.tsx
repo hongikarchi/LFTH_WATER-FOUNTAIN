@@ -4,18 +4,25 @@ import {
   Legend,
   Line,
   LineChart,
+  ReferenceLine,
   ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from 'recharts'
+import { boundariesFor } from '../lib/grade'
 import { recentWindow } from '../lib/normalize'
 import {
+  GRADED_METRICS,
+  GRADE_COLORS,
   METRIC_LABELS,
   STATIONS,
+  type GradedMetric,
   type MetricKey,
   type NormalizedRow,
 } from '../types/waterQuality'
+
+const GRADED_SET = new Set<MetricKey>(GRADED_METRICS)
 
 interface TimeSeriesChartProps {
   rows: NormalizedRow[]
@@ -108,6 +115,23 @@ export function TimeSeriesChart({ rows, windowHours = 24 }: TimeSeriesChartProps
                 formatter={(value) => (value === null || value === undefined ? '—' : value)}
               />
               <Legend />
+              {GRADED_SET.has(metric) &&
+                boundariesFor(metric as GradedMetric).map((b) => (
+                  <ReferenceLine
+                    key={`${b.grade}-${b.kind}-${b.value}`}
+                    y={b.value}
+                    stroke={GRADE_COLORS[b.grade].border}
+                    strokeDasharray="3 3"
+                    strokeWidth={1}
+                    ifOverflow="extendDomain"
+                    label={{
+                      value: b.grade,
+                      position: 'insideTopRight',
+                      fontSize: 10,
+                      fill: GRADE_COLORS[b.grade].border,
+                    }}
+                  />
+                ))}
               {STATIONS.map((station) => (
                 <Line
                   key={station}
