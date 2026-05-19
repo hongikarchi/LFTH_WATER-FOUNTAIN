@@ -28,6 +28,24 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  flex-wrap: wrap;
+}
+
+.next-expected {
+  color: var(--text);
+  font-size: 13px;
+}
+
+.next-expected strong {
+  color: var(--text-h);
+  font-family: var(--mono);
+  margin-left: 4px;
+}
+
+.bg-refetch-hint {
+  color: var(--accent);
+  font-size: 11px;
+  font-style: italic;
 }
 
 .last-updated {

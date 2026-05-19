@@ -7,11 +7,18 @@ import { TimeSeriesChart } from './components/TimeSeriesChart'
 import { useWaterQuality } from './hooks/useWaterQuality'
 
 function App() {
-  const { rows, isLoading, error, lastUpdated, refetch } = useWaterQuality()
+  const { rows, isLoading, error, lastUpdated, nextExpectedAt, isBackgroundRefetching, refetch } =
+    useWaterQuality()
 
   return (
     <div className="app-shell">
-      <Header lastUpdated={lastUpdated} isLoading={isLoading} onRefresh={refetch} />
+      <Header
+        lastUpdated={lastUpdated}
+        nextExpectedAt={nextExpectedAt}
+        isLoading={isLoading}
+        isBackgroundRefetching={isBackgroundRefetching}
+        onRefresh={refetch}
+      />
       {error && <div className="error-banner">에러: {error}</div>}
       <StationGradeCards rows={rows} />
       <GradeTimelineChart rows={rows} />
